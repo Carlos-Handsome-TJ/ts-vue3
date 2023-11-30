@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const http = axios.create({
-  baseURL: '/',
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 5000,
   headers: {
     'Content-type': 'application/json;charset=utf-8'
