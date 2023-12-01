@@ -5,8 +5,30 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: () => import('@/views/home/index.vue')
+      redirect: '/home'
+    },
+    // { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
+    {
+      path: '/tabNav',
+      name: 'tabNav',
+      component: () => import('@/views/tabNav/index.vue'),
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: () => import('@/views/home/index.vue')
+        },
+        {
+          path: '/order',
+          name: 'order',
+          component: () => import('@/views/order/index.vue')
+        },
+        {
+          path: '/me',
+          name: 'me',
+          component: () => import('@/views/me/index.vue')
+        }
+      ]
     }
   ]
 })

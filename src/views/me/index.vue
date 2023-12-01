@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 </script>
 <template>
-  <div>主页内容2222333444</div>
+  <div>我的</div>
 </template>
 <style lang='sass' scoped>
 </style>
