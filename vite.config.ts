@@ -17,7 +17,7 @@ export default () => {
     server: {
       proxy: {},
       port: 3001,
-      open: true
+      open: false
     }
   });
 };
