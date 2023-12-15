@@ -4,6 +4,9 @@ import axios from 'axios'
 import { IndexBar, IndexAnchor, Cell, Button, Search } from 'vant'
 
 const locationList = ref([])
+const showSearchArea = ref(false)
+const searchVal = ref('')
+const searchList = ref([])
 const getLocationList = () => {
   axios
     .get('https://www.mxnzp.com/api/address/list', {
@@ -24,22 +27,45 @@ const getLocationList = () => {
       }
     })
 }
+const searchCity = val => {
+  showSearchArea.value = !!val
+  searchList.value = locationList.value.filter(item => {
+    if (item.name.indexOf(val) > -1) {
+      return item
+    }
+  })
+}
 onMounted(() => {
   getLocationList()
 })
 </script>
 <template>
   <div>
-    <Search placeholder="输入城市名、拼音或字母查询" @input="searchCity"/>
+    <Search
+      placeholder="输入城市名、拼音或字母查询"
+      v-model="searchVal"
+      @update:model-value="searchCity"
+    />
   </div>
-  <div class="hot-title">热门城市</div>
-  <div class="hot-city">
-    <Button type="default" size="small" v-for="item in locationList.slice(3, 13)" :key="item.code">{{ item.name }}</Button>
+  <div v-if="!showSearchArea">
+    <div class="hot-title">热门城市</div>
+    <div class="hot-city">
+      <Button
+        type="default"
+        size="small"
+        v-for="item in locationList.slice(3, 13)"
+        :key="item.code"
+        >{{ item.name }}</Button
+      >
+    </div>
+    <IndexBar>
+      <IndexAnchor index="A" />
+      <Cell v-for="item in locationList" :key="item.code" :title="item.name" />
+    </IndexBar>
   </div>
-  <IndexBar>
-    <IndexAnchor index="A"/>
-    <Cell v-for="item in locationList" :key="item.code" :title="item.name" />
-  </IndexBar>
+  <div v-if="showSearchArea">
+    <Cell v-for="item in searchList" :key="item.code" :title="item.name" />
+  </div>
 </template>
 <style lang="scss" scoped>
 .hot-title {
