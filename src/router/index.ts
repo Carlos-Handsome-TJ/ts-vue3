@@ -29,6 +29,11 @@ const router = createRouter({
           component: () => import('@/views/me/index.vue')
         }
       ]
+    },
+    {
+      path: '/location',
+      name: 'getLocation',
+      component: () => import('@/views/location/index.vue')
     }
   ]
 })
