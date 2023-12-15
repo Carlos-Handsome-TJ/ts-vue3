@@ -2,6 +2,9 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { IndexBar, IndexAnchor, Cell, Button, Search } from 'vant'
+import router from '@/router'
+import '@vant/touch-emulator'
+
 
 const locationList = ref([])
 const showSearchArea = ref(false)
@@ -17,7 +20,7 @@ const getLocationList = () => {
     })
     .then(res => {
       if (res.data) {
-        const data = res.data.data
+        const data = res.data.data || []
         if (data.length) {
           locationList.value = data.reduce((pre, cur) => {
             pre = [...pre, ...cur.pchilds]
@@ -34,6 +37,9 @@ const searchCity = val => {
       return item
     }
   })
+}
+const toHomeView = () => {
+  router.push('/home')
 }
 onMounted(() => {
   getLocationList()
@@ -55,12 +61,13 @@ onMounted(() => {
         size="small"
         v-for="item in locationList.slice(3, 13)"
         :key="item.code"
+        @click="toHomeView"
         >{{ item.name }}</Button
       >
     </div>
     <IndexBar>
       <IndexAnchor index="A" />
-      <Cell v-for="item in locationList" :key="item.code" :title="item.name" />
+      <Cell v-for="item in locationList" :key="item.code" :title="item.name" @click="toHomeView" />
     </IndexBar>
   </div>
   <div v-if="showSearchArea">

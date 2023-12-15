@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Icon } from 'vant'
+import { Icon, Search } from 'vant'
 
 const router = useRouter()
 const getLocation = () => {
@@ -38,6 +38,9 @@ onMounted(() => {
     >
       {{ currentLocation ? currentLocation : '点击获取当前位置' }}
     </Icon>
+  </div>
+  <div>
+    <Search></Search>
   </div>
 </template>
 <style lang="scss" scoped>
