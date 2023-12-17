@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { Icon, Search } from 'vant'
 
 const router = useRouter()
-const getLocation = () => {
+const getLocation = (): void => {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -18,10 +18,10 @@ const getLocation = () => {
     console.log('地理位置不可用')
   }
 }
-const searchLocation = () => {
+const searchLocation = (): void => {
   router.push('/location')
 }
-const currentLocation = ref('')
+const currentLocation = ref<string>('')
 onMounted(() => {
   getLocation()
 })
